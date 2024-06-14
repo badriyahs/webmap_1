@@ -63,11 +63,23 @@ map.on('load', function() {
                 'step',
                 ['get', 'tree_dbh'],
                 4,        // Default radius
-                10, 6,    // Radius 6 for diameter > 10
-                20, 8,    // Radius 8 for diameter > 20
-                30, 10,   // Radius 10 for diameter > 30
-                40, 12    // Radius 12 for diameter > 40
+                10, 6,
+                20, 8,
+                30, 10,
+                40, 12
             ]
         }
     });
+
+    // Add interaction for displaying a popup on click
+    map.on('click', 'trees', function(e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var species = e.features[0].properties.spc_common;
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(species)
+            .addTo(map);
+    });
 });
+
